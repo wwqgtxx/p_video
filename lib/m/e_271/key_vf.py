@@ -1,11 +1,8 @@
 # key_vf.py, p_video/lib/m/e_271/
 
-import re
+from ...util import MEntry
 
-from ... import err, net
-from ...util import log, MEntry
-
-from . import var, _bridge
+from . import _bridge
 
 
 class Entry(MEntry):

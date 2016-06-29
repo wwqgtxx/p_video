@@ -46,7 +46,16 @@ class MEntry(object):
     def do_p(self, data):
         raise NotImplementedError
     
+    
+    @staticmethod
+    def _get_key_data(key, data_item):
+        for i in data_item:
+            if i['key'] == key:
+                return i['ret']
+        return None
+    
     # end MEntry class
+
 
 # end _m_entry.py
 
