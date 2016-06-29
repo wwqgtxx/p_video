@@ -3,7 +3,7 @@
 from .conf import get_feature_init
 
 
-class Var(object):
+class GVar(object):
     '''
     p_video global data
     
@@ -21,18 +21,24 @@ class Var(object):
         self.entry = None	# -e, --entry ENTRY
         
         self.rest = []	# --, rest command line arguments
+        self.raw_url = []	# raw input URLs
+        
+        self.cli_config = {}	# command line config object to output
+            # used with --set-json (stdin input json)
         
         # raw stdin data
         self.raw_stdin = None
+        self.raw_json = None	# json data input from stdin
         
         self.cache = {}		# global module/entry cache
         self.m = None		# module object (single module in p_video)
         self.mvar = None	# module var object
         
-        # TODO
-    # end Var class
+        # output (print stdout) result flag
+        self.pretty_print_sort_key = True	# json.dumps(sort_keys=), should set to false after pretty_print restruct (OrderedDict)
+    # end GVar class
 
-var = Var()	# exports
+var = GVar()	# exports
 # end var.py
 
 

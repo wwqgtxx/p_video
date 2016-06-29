@@ -2,7 +2,7 @@
 
 class MVar(object):
     
-    def __init__(self, var):
+    def __init__(self, gvar):
         
         # TODO
         pass

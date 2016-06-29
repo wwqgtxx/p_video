@@ -6,6 +6,12 @@ def get_feature_init():
         
         'log_level' : '', 	# in ['' (normal), 'quiet']
         
+        'module_check_re_support_url' : True, 
+        
+        # output
+        'pretty_print' : True, 
+        'clean_output_items' : True, 	# remove empty items for more human-friendly read, not for program process
+        
         # parse config
         'fast_parse' : False, 
         'fix_size' : True, 
@@ -33,6 +39,11 @@ def get_feature_init():
             
             'retry' : 3, 
             'retry_wait_s' : 1, 
+            
+            'req_with' : 'curl', 
+            'bin_curl' : 'curl', 
+            
+            'default_header' : None, 
         }, 
         
         # handwich_bridge config
@@ -40,11 +51,14 @@ def get_feature_init():
             'ip' : '127.0.0.1', 
             'port' : 48271, 
             'key' : '', 
+            
+            'core' : {	# core ID list to use
+                'kill_271_cmd5' : 'cmd5', 
+            }, 
         }, 
         
-        # TODO
         
-        # TODO maybe should not in features here
+        # module features
         '_module_feature_prefix' : 'm_', 
     }
     return out
