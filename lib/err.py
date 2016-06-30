@@ -23,7 +23,7 @@ class UnknowError(PVError):
     pass
 class ConfigError(PVError):
     pass
-class NetworkERror(PVError):
+class NetworkError(PVError):
     pass
 class MethodError(PVError):
     pass
