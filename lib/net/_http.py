@@ -21,6 +21,8 @@ req in net.http(req)  (json format)
                 'header' : None, 	# [ optional ] overwrite default headers
                 'header_extra' : {}, 	# [ optional ] add extra headers
                 
+                'use_compress' : True, 
+                
                 # data to POST
                 'data' : None, 		# [ optional ]
                 'data_type' : 'blob', 	# [ optional ] POST data_type, in ['blob', 'text', 'json', 'form' (www-form-urlencoded)]
@@ -72,13 +74,16 @@ def _req_with_native():
     # TODO
     pass
 
-def _req_with_curl(url, timeout_s=None, header={}, method='GET', bin_curl='curl'):
+def _req_with_curl(url, timeout_s=None, header={}, method='GET', bin_curl='curl', use_compress=True):
     # TODO support POST data
     # TODO support other method (not only GET)
     
     # make curl arguments
     to = [bin_curl, url]
+    to += ['-s', '-S']	# set log output
     to += ['--max-time', str(timeout_s)]
+    if use_compress:
+        to += ['--compressed']
     # gen headers
     for i in header:
         one = str(i) + ': ' + str(header[i])
@@ -100,6 +105,7 @@ def _do_one_req(one, req):
     url = one['url']
     method = one['method']
     header = one['_header']
+    use_compress = one['use_compress']
     # TODO support POST data
     # TODO support req with native
     out = {}
@@ -107,7 +113,7 @@ def _do_one_req(one, req):
     if req_with == 'curl':
         # TODO error process
         # TODO support get error info from curl
-        blob = _req_with_curl(url, timeout_s=timeout, header=header, method=method, bin_curl=req['bin_curl'])
+        blob = _req_with_curl(url, timeout_s=timeout, header=header, method=method, bin_curl=req['bin_curl'], use_compress=use_compress)
         # TODO log
         out['blob'] = blob
     else:
@@ -203,6 +209,7 @@ def http(req):
     # merge one item default config
     one_default = {
         'method' : 'GET', 
+        'use_compress' : True, 
         # POST
         'data' : None, 
         'data_type' : 'blob', 

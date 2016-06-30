@@ -1,12 +1,17 @@
 # info_vms.py, p_video/lib/m/e_271/
 
 import random
+import uuid
 
 from ... import err, util, net
 from ...util import log, MEntry
 
 from . import var, _common
 
+
+def gen_auth_key(ugc_auth_key, tm, tvid):
+    auth_key = util.hash_md5(util.hash_md5(ugc_auth_key) + str(tm) + str(tvid))
+    return auth_key
 
 # com.qiyi.player.core.model.remote.MixerRemote.getRequest()
 def _raw_make_first_url(
@@ -24,9 +29,8 @@ def _raw_make_first_url(
         thdk = '', 	# NOTE can be empty
         thdt = '', 	# NOTE can be empty
         set_locale_zh_tw = False):	# NOTE default value is False
-    
     # _loc3 :uint = getTimer()
-    auth_key = util.hash_md5(util.hash_md5(ugc_auth_key) + str(tm) + tvid)
+    auth_key = gen_auth_key(ugc_auth_key, tm, tvid)
     
     vinfo = 0
     vv = ''
@@ -90,7 +94,10 @@ class Entry(MEntry):
         auth_key = f['m_auth_key']
         set_locale_zh_tw = f['m_set_locale_zh_tw']
         
-        out = _raw_make_first_url(tvid, vid, tm, set_vv=set_vv, set_um=set_um, ugc_auth_key=auth_key, set_locale_zh_tw=set_locale_zh_tw)
+        # FIXME TODO gen random qyid
+        qyid = uuid.uuid4().hex
+        
+        out = _raw_make_first_url(tvid, vid, tm, qyid=qyid, set_vv=set_vv, set_um=set_um, ugc_auth_key=auth_key, set_locale_zh_tw=set_locale_zh_tw)
         return out
     
     def get_dep(self, gvar, data):

@@ -57,7 +57,7 @@ def get_feature_init():
         'handwich_bridge_server' : {
             'ip' : '127.0.0.1', 
             'port' : 48271, 
-            'key' : '', 
+            'key' : None, 
             
             'core' : {	# core ID list to use
                 'kill_271_cmd5' : 'cmd5', 

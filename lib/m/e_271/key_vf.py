@@ -18,7 +18,7 @@ class Entry(MEntry):
     # no dep
     
     def do_p(self, data):
-        raw_str = data
+        raw_str = data['_raw']
         # init bridge
         _bridge.init(self.gvar)
         

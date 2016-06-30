@@ -15,7 +15,7 @@ def set_features(arg_info):
         for i in to:	# check module feature
             if not i.startswith(mp) and (not i in f):
                 log.w('unknow global feature ' + i)
-            if f[i] == value:
+            if (i in f) and (f[i] == value):
                 if i in ed:
                     log.w('already ' + info + ' feature ' + i)
                 else:
