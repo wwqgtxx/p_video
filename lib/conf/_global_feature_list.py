@@ -1,4 +1,5 @@
 # _global_feature_list.py, p_video/lib/conf/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 
 def get_feature_init():
     out = {	# global features list and init (default) status (value)

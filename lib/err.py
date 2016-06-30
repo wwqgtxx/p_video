@@ -1,4 +1,5 @@
 # err.py, p_video/lib/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 '''
 error class for p_video
 

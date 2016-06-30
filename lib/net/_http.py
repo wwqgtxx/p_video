@@ -1,4 +1,5 @@
 # _http.py, p_video/lib/net/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 '''
 p_video global http request method
 

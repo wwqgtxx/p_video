@@ -27,9 +27,13 @@ MODULE_FEATURES = {	# module support features and init value
 }
 CACHE_BLACKLIST = [	# never cache these items (entry)
     'key_vf', 
-    'url_before', 
     'url_file', 
     'vv_key', 
+]
+CACHE_ALL = [	# default cache items
+    'info_vid', 
+    'info_vms', 
+    'url_before', 
 ]
 
 # at 2016-06-29

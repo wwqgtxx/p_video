@@ -1,4 +1,5 @@
 # _pvinfo_pretty_print.py, p_video/lib/util/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 '''
 
 pvinfo (json) format
@@ -22,7 +23,7 @@ pvinfo (json) format
         
         'feature' : {}, # [optional] set features
         
-        'comment' : '', 	# [optional] --comment
+        'comment' : [], # [optional] --comment
     }, 
     
     'info' : {

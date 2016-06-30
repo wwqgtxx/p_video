@@ -1,4 +1,5 @@
 # _log.py, p_video/lib/util/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 
 class Log(object):
     

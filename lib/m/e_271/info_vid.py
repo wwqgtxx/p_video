@@ -1,4 +1,5 @@
 # info_vid.py, p_video/lib/m/e_271/
+# LICENSE GNU GPLv3+: Copyright (C) 2016  sceext <sceext@foxmail.com> 
 
 import re
 
