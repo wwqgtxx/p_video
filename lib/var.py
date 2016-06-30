@@ -19,6 +19,10 @@
 
 from .conf import get_feature_init
 
+# pvinfo const
+PVINFO_MARK_UUID = 'fa8b4922-983f-4bca-8127-9028055fad89'
+PVINFO_PORT_VERSION = '0.8.0-1'
+
 
 class GVar(object):
     '''
@@ -32,7 +36,6 @@ class GVar(object):
         
         # command line data
         self.debug = False	# --debug, global debug (low-level) flag
-        self.comment = None	# --comment TEXT
         
         self.module = None	# -m, --module MODULE
         self.entry = None	# -e, --entry ENTRY
@@ -40,8 +43,7 @@ class GVar(object):
         self.rest = []	# --, rest command line arguments
         self.raw_url = []	# raw input URLs
         
-        self.cli_config = {}	# command line config object to output
-            # used with --set-json (stdin input json)
+        self.raw_cli_config = {}	# raw command line config object to output (pvinfo)
         
         # raw stdin data
         self.raw_stdin = None

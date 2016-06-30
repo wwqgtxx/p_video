@@ -19,6 +19,7 @@
 #
 
 import os, sys
+import json
 
 def get_root_path():
     now_file = __file__
@@ -32,14 +33,66 @@ sys.path.insert(0, get_root_path())
 from lib.cli import about, help, p_arg, use_arg
 from lib import err, util, cache
 from lib.util import log
-from lib.var import var
+from lib.var import var, PVINFO_MARK_UUID, PVINFO_PORT_VERSION
 
+
+def _read_stdin():
+    i = sys.stdin.buffer
+    return i.read()
 
 def start_normal(arg_info):
+    # set cli arg value
+    use_arg.use(arg_info)
     
-    # FIXME TODO
-    _print_bad_cli()
-    # TODO
+    # check --set-json
+    module_raw = None	# _raw data for first module/entry
+    if arg_info['_set_json']:
+        blob = _read_stdin()
+        var.raw_stdin = blob
+        
+        text = blob.decode('utf-8')
+        info = json.loads(text)
+        var.raw_json = info
+        # check mark_uuid and port_version
+        if ('mark_uuid' in info) and (info['mark_uuid'] != PVINFO_MARK_UUID):
+            log.w('pvinfo.mark_uuid ' + info['mark_uuid'] + ' != ' + PVINFO_MARK_UUID)
+        if ('port_version' in info) and (info['port_version'] != PVINFO_PORT_VERSION):
+            log.w('pvinfo.port_version ' + info['port_version'] + ' != ' + PVINFO_PORT_VERSION)
+        # set info
+        if 'config' in info:
+            log.i('override CLI arg_info with pvinfo.config from stdin')
+            use_arg.use(info['config'])	# override CLI arg_info
+        if '_raw' in info:
+            module_raw = info['_raw']
+        if '_cache' in info:
+            var.cache = info['_cache']
+    # TODO support auto-set/default module/entry name
+    # check module/entry name
+    if var.module == None:
+        log.e('not set module name')
+        raise err.ConfigError('no_module_name', var.module)
+    if var.entry == None:
+        log.e('not set entry name')
+        raise err.ConfigError('no_entry_name', var.entry)
+    
+    # import and call module
+    result = cache.do_call_module(module_raw)
+    
+    # print result
+    f = var.feature
+    pretty_print = f['pretty_print']
+    fix_unicode = f['fix_unicode']
+    sort_key = var.pretty_print_sort_key
+    if pretty_print:
+        text = util.json_print(result, sort_key=sort_key, fix_unicode=fix_unicode)
+    else:
+        text = json.dumps(result, ensure_ascii=fix_unicode)
+    text += '\n'
+    blob = text.encode('utf-8')
+    
+    sys.stdout.buffer.write(blob)
+    sys.stdout.buffer.flush()
+    # done
 
 
 def _print_help(help_item):
@@ -50,6 +103,10 @@ def _print_bad_cli():
     log.e('bad command line, please try "--help"')
 
 def main(argv):
+    # check no arg
+    if len(argv) < 1:
+        _print_bad_cli()
+        return 1
     # parse CLI arguments
     log.log_module = True
     log.log_function = False
@@ -59,11 +116,9 @@ def main(argv):
         _print_bad_cli()
         return 1
     log.log_module = False
-    
-    # TODO process low-level debug (--debug)
+    # process low-level debug (--debug)
     if arg_info['_debug']:
         log.d('low-level: arg_info ' + util.json_print(arg_info))
-        # TODO maybe set to global var
     
     # check start mode
     sm = arg_info['_start_mode']

@@ -4,16 +4,17 @@
 def get_feature_init():
     out = {	# global features list and init (default) status (value)
         'debug' : False, 
-        
         'log_level' : '', 	# in ['' (normal), 'quiet']
         
         'method_check_re_support_url' : True, 
         
         # output
         'pretty_print' : True, 
+        'fix_unicode' : False, 
+        
         'clean_output_items' : True, 	# remove empty items for more human-friendly read, not for program process
         
-        # parse config
+        # global parse config
         'fast_parse' : False, 
         'fix_size' : True, 
         
@@ -45,6 +46,7 @@ def get_feature_init():
             'bin_curl' : 'curl', 
             
             'default_header' : None, 
+            # TODO
         }, 
         
         # handwich_bridge config

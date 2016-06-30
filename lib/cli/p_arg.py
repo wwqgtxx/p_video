@@ -64,6 +64,8 @@ def parse(args):
         if one in ['-s', '--set']:
             to, rest = rest[0], rest[1:]
             key, value = to.split('=', 1)
+            if key in out['feature']:
+                log.w('already set feature \"' + key + '\", now override value')
             out['feature'][key] = _parse_set_feature(value)
         elif one in ['-E', '--enable']:
             to, rest = rest[0], rest[1:]

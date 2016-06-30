@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-from ._module import MVar
+from ._module import MVar, import_module
 from ._m_entry import MEntry
 
 from ._log import Log
@@ -28,6 +28,8 @@ from ._common import (
     json_clone, 
     json_cmp, 
     json_print, 
+    
+    merge_dict_obj, 
 )
 
 
