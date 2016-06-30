@@ -78,6 +78,9 @@ class Log(object):
             self._pp(text, prefix='  (debug) ', *k, **kk)
     # end Log class
 
+# exports: global default log object
+log = Log()
+
 # end _log.py
 
 

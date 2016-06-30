@@ -14,17 +14,6 @@ RE_SUPPORT_URL = [
     '^http://[a-z]+\.iqiyi\.com/.+\.html', 
 ]
 
-CACHE_BLACKLIST = [	# never cache these items (entry)
-    'key_vf', 
-    'url_file', 
-    'vv_key', 
-]
-CACHE_ALL = [	# default cache items
-    'info_vid', 
-    'info_vms', 
-    'url_before', 
-]
-
 # at 2016-06-29
 _SWF_PLAYER = 'http://www.iqiyi.com/common/flashplayer/20160620/1719f98c2359.swf'
 _HANDWICH_BRIDGE_CORE = 'kill_271_cmd5'
@@ -53,38 +42,33 @@ _MIXER_VX_URL = 'http://cache.video.qiyi.com'
 _MIXER_BACKUP_URL = 'http://211.151.158.155'
 _VIP_AUTH_URL = 'http://api.vip.iqiyi.com/services/ckn.action'
 
-# TODO
-
-
-def get_module_feature_init():
-    # module support features and init value
-    out = {
-        'm_set_um' : False, 
-        'm_set_vv' : False, 
-        
-        'm_auth_key' : '', 	# NOTE maybe the password of one video
-        
-        'm_set_locale_zh_tw' : False, 
-        
-        # TODO support set_flag_v
-    }
-    return out
-
 
 class Var(MVar):
     '''
     module global var and init
     '''
-    def __init__(self, gvar):
-        super().__init__(gvar)
-        
-        # TODO check and init module features
-        
-        # TODO init cache (use) list
-        
-        # TODO check use_cache and try to `clean` cache
-        
-        # TODO
+    @staticmethod
+    def get_module_feature_init():
+        out = {	# module support features and init value
+            'm_set_um' : False, 
+            'm_set_vv' : False, 
+            
+            'm_auth_key' : '', 	# NOTE maybe the password of one video
+            
+            'm_set_locale_zh_tw' : False, 
+            
+            # set m_cache_blacklist and m_cache_all_list
+            'm_cache_blacklist' : [	# never cache these items (entry)
+                'key_vf', 
+                'url_file', 
+                'vv_key', 
+            ], 
+            'm_cache_all_list' : [	# default cache items
+                'info_vid', 
+                'info_vms', 
+            ], 
+        }	# TODO support set_flag_v
+        return out
     # end Var class
 
 module_var = Var	# exports

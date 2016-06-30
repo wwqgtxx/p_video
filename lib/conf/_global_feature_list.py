@@ -22,7 +22,9 @@ def get_feature_init():
         'cache_all' : False, 		# cache all items by default (used for auto-conf)
         'cache_nothing' : False, 	# not cache is first than cache
         
-        'cache_blacklist' : [], 	# should be set by init of module.var
+        # NOTE `m_cache_blacklist` and `m_cache_all_list` should not be here
+        #'m_cache_blacklist' : [], 	# should be set by init of module.var
+        #'m_cache_all_list' : [], 	# should be set by init of module.var
         
         'cache_use' : [], 	# use input `pvinfo._cache`
         'cache_not' : [], 	# not use cache item from input

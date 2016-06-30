@@ -34,6 +34,8 @@ def set_features(arg_info):
 
 def set_json_feature(to):
     f = var.feature
+    mp = f['_module_feature_prefix']
+    
     for i in to:
         if not i.startswith(mp) and (not i in f):
             log.w('unknow global feature ' + i)

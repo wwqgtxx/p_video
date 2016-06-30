@@ -20,7 +20,7 @@
 from ._module import MVar, import_m_var, import_m_entry
 from ._m_entry import MEntry
 
-from ._log import Log
+from ._log import Log, log
 
 from ._common import (
     hash_md5, 
@@ -32,11 +32,6 @@ from ._common import (
     merge_dict_obj, 
 )
 
-
-# TODO
-
-# exports
-log = Log()
 
 # end __init__.py
 
