@@ -35,14 +35,47 @@ from lib.util import log
 from lib.var import var
 
 
-def main(argv):
-    # parse CLI arguments
-    arg_info = p_arg.parse(argv)
+def start_normal(arg_info):
     
-    # TODO FIXME DEBUG here
-    
+    # FIXME TODO
+    _print_bad_cli()
     # TODO
 
+
+def _print_help(help_item):
+    # TODO support help_item
+    print(help.get_help())
+
+def _print_bad_cli():
+    log.e('bad command line, please try "--help"')
+
+def main(argv):
+    # parse CLI arguments
+    log.log_module = True
+    log.log_function = False
+    try:
+        arg_info = p_arg.parse(argv)
+    except Exception as e:
+        _print_bad_cli()
+        return 1
+    log.log_module = False
+    
+    # TODO process low-level debug (--debug)
+    if arg_info['_debug']:
+        log.d('low-level: arg_info ' + util.json_print(arg_info))
+        # TODO maybe set to global var
+    
+    # check start mode
+    sm = arg_info['_start_mode']
+    if sm == '--help':
+        _print_help(arg_info['_help_item'])
+    elif sm == '--version':
+        print(about.get_version_info())
+    elif sm == '--license':
+        print(about.get_license())
+    else:	# (sm == '') normal start
+        return start_normal(arg_info)
+    return 0
 
 if __name__ == '__main__':
     exit(main(sys.argv[1:]))

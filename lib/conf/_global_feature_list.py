@@ -7,7 +7,7 @@ def get_feature_init():
         
         'log_level' : '', 	# in ['' (normal), 'quiet']
         
-        'module_check_re_support_url' : True, 
+        'method_check_re_support_url' : True, 
         
         # output
         'pretty_print' : True, 

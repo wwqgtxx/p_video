@@ -1,8 +1,7 @@
 # var.py, p_video/lib/m/e_271/
 # extractor module: 271
 
-from ...util import MVar
-from ...util import log
+from ...util import log, MVar
 
 
 # module const
@@ -15,16 +14,6 @@ RE_SUPPORT_URL = [
     '^http://[a-z]+\.iqiyi\.com/.+\.html', 
 ]
 
-MODULE_FEATURES = {	# module support features and init value
-    'm_set_um' : False, 
-    'm_set_vv' : False, 
-    
-    'm_auth_key' : '', 	# NOTE maybe the password of one video
-    
-    'm_set_locale_zh_tw' : False, 
-    
-    # TODO support set_flag_v
-}
 CACHE_BLACKLIST = [	# never cache these items (entry)
     'key_vf', 
     'url_file', 
@@ -65,6 +54,21 @@ _MIXER_BACKUP_URL = 'http://211.151.158.155'
 _VIP_AUTH_URL = 'http://api.vip.iqiyi.com/services/ckn.action'
 
 # TODO
+
+
+def get_module_feature_init():
+    # module support features and init value
+    out = {
+        'm_set_um' : False, 
+        'm_set_vv' : False, 
+        
+        'm_auth_key' : '', 	# NOTE maybe the password of one video
+        
+        'm_set_locale_zh_tw' : False, 
+        
+        # TODO support set_flag_v
+    }
+    return out
 
 
 class Var(MVar):
