@@ -35,6 +35,9 @@ module/entry class
 
 '''
 
+from ._common import json_cmp
+
+
 class MEntry(object):
     def __init__(self):
         self.gvar = None
@@ -51,7 +54,7 @@ class MEntry(object):
     @staticmethod
     def _get_key_data(key, data_item):
         for i in data_item:
-            if i['key'] == key:
+            if json_cmp(i['key'], key):
                 return i['ret']
         return None
     

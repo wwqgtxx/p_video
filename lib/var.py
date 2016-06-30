@@ -50,8 +50,9 @@ class GVar(object):
         self.raw_json = None	# json data input from stdin
         
         self.cache = {}		# global module/entry cache
-        self.m = None		# module object (single module in p_video)
+        # NOTE single module in p_video process
         self.mvar = None	# module var object
+        self.e = {}		# module/entry class
         
         # output (print stdout) result flag
         self.pretty_print_sort_key = True	# json.dumps(sort_keys=), should set to false after pretty_print restruct (OrderedDict)

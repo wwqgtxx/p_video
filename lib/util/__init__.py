@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-from ._module import MVar, import_module
+from ._module import MVar, import_m_var, import_m_entry
 from ._m_entry import MEntry
 
 from ._log import Log

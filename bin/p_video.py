@@ -75,8 +75,14 @@ def start_normal(arg_info):
         log.e('not set entry name')
         raise err.ConfigError('no_entry_name', var.entry)
     
+    # TODO turn no log_module maybe BUG or improved
+    # NOTE turn on log_module
+    old_log_module = log.log_module
+    log.log_module = True
     # import and call module
     result = cache.do_call_module(module_raw)
+    # NOTE restore log_module
+    log.log_module = old_log_module
     
     # print result
     f = var.feature

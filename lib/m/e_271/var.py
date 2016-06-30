@@ -75,12 +75,14 @@ class Var(MVar):
     '''
     module global var and init
     '''
-    def __init__(self, var):
-        super().__init__(var)
+    def __init__(self, gvar):
+        super().__init__(gvar)
         
         # TODO check and init module features
         
         # TODO init cache (use) list
+        
+        # TODO check use_cache and try to `clean` cache
         
         # TODO
     # end Var class
