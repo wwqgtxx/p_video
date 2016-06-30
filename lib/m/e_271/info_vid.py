@@ -17,6 +17,7 @@ def _get_vid(html):
     for key in re_list:
         try:
             one = re.findall(re_list[key], html)[0]
+            out[key] = one
         except Exception as e:
             if key in ignore_list:
                 log.w('ignore get_vid [' + key + ']')

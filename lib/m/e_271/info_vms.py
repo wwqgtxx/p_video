@@ -90,7 +90,7 @@ class Entry(MEntry):
         auth_key = f['m_auth_key']
         set_locale_zh_tw = f['m_set_locale_zh_tw']
         
-        out = _raw_make_first_url(tvid, vid, tm, set_vv=set_vv, set_um=set_uv, ugc_auth_key=auth_key, set_locale_zh_tw=set_locale_zh_tw)
+        out = _raw_make_first_url(tvid, vid, tm, set_vv=set_vv, set_um=set_um, ugc_auth_key=auth_key, set_locale_zh_tw=set_locale_zh_tw)
         return out
     
     def get_dep(self, gvar, data):

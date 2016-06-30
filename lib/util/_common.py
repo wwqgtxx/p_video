@@ -6,9 +6,7 @@ import hashlib
 
 
 def hash_md5(raw):
-    
-    # TODO
-    pass
+    return hashlib.md5(bytes(raw, 'utf-8')).hexdigest()
 
 
 def json_clone(raw):

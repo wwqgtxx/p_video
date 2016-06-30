@@ -41,14 +41,16 @@ def get_feature_init():
             'pool_size' : 16, 
             'timeout_s' : 10, 
             
-            'retry' : 3, 
+            'retry' : 2, 
             'retry_wait_s' : 1, 
             
             'req_with' : 'curl', 
             'bin_curl' : 'curl', 
             
-            'default_header' : None, 
-            # TODO
+            'default_header' : {
+                'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0', 
+                # TODO use a Windows UA
+            }, 
         }, 
         
         # handwich_bridge config
