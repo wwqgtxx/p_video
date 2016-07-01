@@ -32,10 +32,10 @@ def _get_vid(html):
 class Entry(MEntry):
     '''
     module/entry: m.e_271.info_vid
+        get vid info from video html page
     
     data : {
         '_raw' : {
-            'key' : '', 
             'raw_url' : '', 
         }, 
     }
@@ -76,7 +76,7 @@ class Entry(MEntry):
             raise er from e
         # make out data
         out = {
-            'key' : data['_raw']['key'], 
+            'key' : _common.pure_url(raw_url), 
             'url' : raw_url, 
             'url_pure' : _common.pure_url(raw_url), 
             'vid' : vid, 
