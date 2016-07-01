@@ -1,0 +1,10 @@
+
+*.py[cd]
+__pycache__/
+
+
+\'*
+
+.clean_py.flag
+
+
