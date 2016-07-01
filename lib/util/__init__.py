@@ -44,6 +44,7 @@ from ._select_hd_i import (
 
 from ._hd_quality import HD_TO_QUALITY, get_quality
 from ._pvinfo_pretty_print import pvinfo_pretty_print
+from ._make_pvinfo_output import make_pvinfo_output
 
 
 # end __init__.py

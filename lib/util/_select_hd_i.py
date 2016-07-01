@@ -58,7 +58,7 @@ def select_hd_i(pvinfo):
             if (i[1] != None) and (j > i[1]):	# i_max
                 ignore_i = True
             if ignore_i:
-                v['file'][i]['url'] = ''
+                v['file'][j]['url'] = ''
     return pvinfo
 
 # end _select_hd_i.py
