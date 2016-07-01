@@ -17,11 +17,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-from ._module import MVar, import_m_var, import_m_entry
+from ._log import Log, log
 from ._m_entry import MEntry
 
-from ._log import Log, log
-
+from ._module import (
+    MVar, 
+    import_m_var, 
+    import_m_entry, 
+)
 from ._common import (
     hash_md5, 
     
@@ -32,6 +35,11 @@ from ._common import (
     merge_dict_obj, 
     
     gen_last_update, 
+)
+from ._select_hd_i import (
+    count_video, 
+    count_one_video, 
+    select_hd_i, 
 )
 
 from ._hd_quality import HD_TO_QUALITY, get_quality

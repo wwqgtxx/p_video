@@ -3,7 +3,7 @@
 
 import re
 
-from ... import err, net, util
+from ... import err, util, net
 from ...util import log, MEntry
 
 from . import var, _common
@@ -36,7 +36,7 @@ class Entry(MEntry):
     
     data : {
         '_raw' : {
-            'raw_url' : '', 
+            'url' : '', 	# raw html page url
         }, 
     }
     
@@ -57,7 +57,7 @@ class Entry(MEntry):
     
     def do_p(self, data):
         # load html_page
-        raw_url = data['_raw']['raw_url']
+        raw_url = data['_raw']['url']
         req = {
             'req' : [
                 {

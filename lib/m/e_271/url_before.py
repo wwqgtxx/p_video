@@ -35,9 +35,7 @@ class Entry(MEntry):
             dep.append({
                 'entry' : 'info_vms', 
                 'key' : self._key, 
-                'raw' : {
-                    'url' : data['_raw']['url'], 
-                }, 
+                'raw' : data['_raw'], 
             })
             return dep
         # TODO check vv_key

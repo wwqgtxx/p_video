@@ -17,7 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-from ...util import MEntry
+from ... import err, util
+from ...util import log, MEntry
 
 from . import var, _common
 

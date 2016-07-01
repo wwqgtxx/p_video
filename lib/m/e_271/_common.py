@@ -7,7 +7,6 @@ def pure_url(raw):
     out = raw.split('#', 1)[0].split('?', 1)[0]
     return out
 
-# TODO
 
 # end _common.py
 

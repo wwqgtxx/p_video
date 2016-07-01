@@ -103,9 +103,7 @@ class Entry(MEntry):
             dep.append({
                 'entry' : 'info_vid', 
                 'key' : self._key, 
-                'raw' : {
-                    'raw_url' : data['_raw']['url'], 
-                }, 
+                'raw' : data['_raw'], 
             })
             return dep
         # check get key_vf (never cache key_vf)
