@@ -117,7 +117,7 @@ class Entry(MEntry):
             return dep
         # check get key_vf (never cache key_vf)
         if (not 'key_vf' in data) or (self._get_key_data(self._key, data['key_vf']) == None):
-            info_vid = self._get_key_data(self._key, data['info_vid'])
+            info_vid = self._get_key_data(self._key, data['info_vid'])['vid']
             self._part_first_url = self._make_part_first_url(info_vid)
             
             dep.append({

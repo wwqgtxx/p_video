@@ -41,9 +41,6 @@ def _read_stdin():
     return i.read()
 
 def start_normal(arg_info):
-    # set cli arg value
-    use_arg.use(arg_info)
-    
     # check --set-json
     module_raw = None	# _raw data for first module/entry
     if arg_info['_set_json']:
@@ -60,12 +57,15 @@ def start_normal(arg_info):
             log.w('pvinfo.port_version ' + info['port_version'] + ' != ' + PVINFO_PORT_VERSION)
         # set info
         if 'config' in info:
-            log.i('override CLI arg_info with pvinfo.config from stdin')
-            use_arg.use(info['config'])	# override CLI arg_info
+            log.i('use pvinfo.config from stdin before CLI')
+            use_arg.use(info['config'])
         if '_raw' in info:
             module_raw = info['_raw']
         if '_cache' in info:
             var.cache = info['_cache']
+    # NOTE  CLI should override --set-json
+    use_arg.use(arg_info)	# set cli arg value
+    
     # TODO support auto-set/default module/entry name
     # check module/entry name
     if var.module == None:

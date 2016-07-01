@@ -42,6 +42,18 @@ _MIXER_VX_URL = 'http://cache.video.qiyi.com'
 _MIXER_BACKUP_URL = 'http://211.151.158.155'
 _VIP_AUTH_URL = 'http://api.vip.iqiyi.com/services/ckn.action'
 
+# site video bid to p_video hd quality
+_TO_HD = {	# video bid to video hd
+    10 : 7, 	# 4k, 		4K
+    5 : 4, 	# fullhd, 	1080p
+    4 : 2, 	# super-high, 	720p
+    3 : 1, 	# super, 	高清
+    2 : 0, 	# high, 	普清
+    1 : -1, 	# standard, 	低清
+    0 : -2, 	# none, 	超低清
+    96 : -3, 	# topspeed, 	渣清
+}
+
 
 class Var(MVar):
     '''

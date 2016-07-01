@@ -41,15 +41,16 @@ class Entry(MEntry):
     }
     
     -> {
+        'key' : '', 
         'url' : '', 	# raw_url
         'url_pure' : '', 
         
-        'vid' : '', 
-        'tvid' : '', 	# main vid
-        'aid' : '', 	# albumID
-        'flag_vv' : False, 
-        
-        'key' : '', 
+        'vid' : {
+            'vid' : '', 
+            'tvid' : '', 	# main vid
+            'aid' : '', 	# albumID
+            'flag_vv' : False, 
+        }, 
     }
     '''
     # no dep
@@ -68,17 +69,18 @@ class Entry(MEntry):
         html_text = net.http(req)['text']
         
         try:	# NOTE error process
-            out = _get_vid(html_text)
+            vid = _get_vid(html_text)
         except Exception as e:
             log.e('get vid_info failed from ' + raw_url)
             er = err.NotSupportURLError('get_vid', raw_url)
             raise er from e
-        # add more data
-        out['url'] = raw_url
-        out['url_pure'] = _common.pure_url(raw_url)
-        
-        out['key'] = data['_raw']['key']
-        
+        # make out data
+        out = {
+            'key' : data['_raw']['key'], 
+            'url' : raw_url, 
+            'url_pure' : _common.pure_url(raw_url), 
+            'vid' : vid, 
+        }
         return out
     # end Entry class
 
