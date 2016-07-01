@@ -3,7 +3,7 @@
 
 import re
 
-from ... import err, net, util
+from ... import err, util, net
 from ...util import log, MEntry
 
 from . import var, _common
@@ -32,31 +32,32 @@ def _get_vid(html):
 class Entry(MEntry):
     '''
     module/entry: m.e_271.info_vid
+        get vid info from video html page
     
     data : {
         '_raw' : {
-            'key' : '', 
-            'raw_url' : '', 
+            'url' : '', 	# raw html page url
         }, 
     }
     
     -> {
+        'key' : '', 
         'url' : '', 	# raw_url
         'url_pure' : '', 
         
-        'vid' : '', 
-        'tvid' : '', 	# main vid
-        'aid' : '', 	# albumID
-        'flag_vv' : False, 
-        
-        'key' : '', 
+        'vid' : {
+            'vid' : '', 
+            'tvid' : '', 	# main vid
+            'aid' : '', 	# albumID
+            'flag_vv' : False, 
+        }, 
     }
     '''
     # no dep
     
     def do_p(self, data):
         # load html_page
-        raw_url = data['_raw']['raw_url']
+        raw_url = data['_raw']['url']
         req = {
             'req' : [
                 {
@@ -68,17 +69,18 @@ class Entry(MEntry):
         html_text = net.http(req)['text']
         
         try:	# NOTE error process
-            out = _get_vid(html_text)
+            vid = _get_vid(html_text)
         except Exception as e:
             log.e('get vid_info failed from ' + raw_url)
             er = err.NotSupportURLError('get_vid', raw_url)
             raise er from e
-        # add more data
-        out['url'] = raw_url
-        out['url_pure'] = _common.pure_url(raw_url)
-        
-        out['key'] = data['_raw']['key']
-        
+        # make out data
+        out = {
+            'key' : _common.pure_url(raw_url), 
+            'url' : raw_url, 
+            'url_pure' : _common.pure_url(raw_url), 
+            'vid' : vid, 
+        }
         return out
     # end Entry class
 

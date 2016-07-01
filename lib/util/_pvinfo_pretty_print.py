@@ -86,9 +86,114 @@ pvinfo (json) format
 
 '''
 
+from collections import OrderedDict
 
-# TODO
+from ._common import json_clone, gen_last_update
 
+
+def _restruct_key(old, key_list=[], rest_sort_reverse=False):
+    '''
+    restruct a dict to OrderedDict
+    order is in key_list
+    
+    rest keys is keys in old but not in key_list
+    rest keys is sort by rest_sort_reverse
+    if rest_sort_reverse == None, rest keys will not be sort
+    '''
+    raw = old.copy()	# not modify old dict
+    out = OrderedDict()
+    for key in key_list:
+        if key in raw:	# ignore not exist keys
+            out[key] = raw.pop(key)
+    # get rest key list and sort keys by key name
+    rest_key = [i for i in raw]
+    if rest_sort_reverse != None:
+        rest_key.sort(reverse=rest_sort_reverse)
+    # add rest keys
+    for key in rest_key:
+        out[key] = raw.pop(key)
+    return out
+
+
+def pvinfo_pretty_print(pvinfo):
+    # key order list
+    pvinfo_list = [	# pvinfo
+        '#', 
+        'mark_uuid', 
+        'port_version', 
+        'config', 
+        'info', 
+        'video', 
+        '_raw', 
+        '_cache', 
+        'last_update', 
+    ]
+    config_list = [	# pvinfo.config
+        'info_source', 
+        'module', 
+        'entry', 
+        'rest', 
+        'raw_url', 
+        'enable', 
+        'disable', 
+        'feature', 
+        'comment', 
+    ]
+    info_list = [	# pvinfo.info
+        'url', 
+        'url_pure', 
+        'title', 
+        'title_extra', 
+        'site', 
+        'site_name', 
+        'vid', 
+        'vid_extra', 
+    ]
+    title_extra_list = [	# pvinfo.info.title_extra
+        'sub', 
+        'no', 
+        'short', 
+    ]
+    video_list = [	# pvinfo.video[]
+        'hd', 
+        'quality', 
+        'size_px', 
+        'size_byte', 
+        'time_s', 
+        'format', 
+        'count', 
+        'file', 
+    ]
+    file_list = [	# pvinfo.video[].file[]
+        'type', 
+        'size_byte', 
+        'time_s', 
+        'url', 
+        'header', 
+        'checksum', 
+        'expire', 
+    ]
+    # restruct pvinfo
+    pvinfo = _restruct_key(json_clone(pvinfo), pvinfo_list)
+    if 'config' in pvinfo:
+        pvinfo['config'] = _restruct_key(pvinfo['config'], config_list)
+    pvinfo['info'] = _restruct_key(pvinfo['info'], info_list)
+    if 'title_extra' in pvinfo['info']:
+        pvinfo['info']['title_extra'] = _restruct_key(pvinfo['info']['title_extra'], title_extra_list)
+    for i in range(len(pvinfo['video'])):
+        pvinfo['video'][i] = _restruct_key(pvinfo['video'][i], video_list)
+        v = pvinfo['video'][i]
+        for j in range(len(v['file'])):
+            v['file'][j] = _restruct_key(v['file'][j], file_list)
+            #f = v['file'][j]
+    # TODO sort (key of) sub items, such as header, checksum
+    
+    # sort video by hd
+    pvinfo['video'].sort(key = lambda x: x['hd'], reverse=True)
+    # reset last_update
+    pvinfo['last_update'] = gen_last_update()
+    
+    return pvinfo
 
 # end _pvinfo_pretty_print.py
 

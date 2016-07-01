@@ -12,7 +12,8 @@ def get_feature_init():
         'pretty_print' : True, 
         'fix_unicode' : False, 
         
-        'clean_output_items' : True, 	# remove empty items for more human-friendly read, not for program process
+        'clean_output_pvinfo' : True, 	# remove empty optional data in output pvinfo
+        'keep_raw_quality' : True, 	# keep raw `quality` in pvinfo.video[].quality
         
         # global parse config
         'fast_parse' : False, 

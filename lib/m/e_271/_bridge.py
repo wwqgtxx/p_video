@@ -3,6 +3,8 @@
 from ...util import log
 from ...bridge import flash_bridge
 
+from . import var
+
 
 def init(gvar):	# init bridge (handwich_bridge)
     # NOTE init() may be called many times
@@ -13,7 +15,7 @@ def get_vf(raw):
     
     # init handwich_bridge
     create = flash_bridge.get_bridge('handwich_bridge')
-    h = create('kill_271_cmd5')
+    h = create(var._HANDWICH_BRIDGE_CORE)
     # DEBUG log
     log.d('call handwich_bridge.core.kill_271_cmd5.calc, ' + str(raw))
     # call it

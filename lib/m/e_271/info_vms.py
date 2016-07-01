@@ -75,12 +75,6 @@ class Entry(MEntry):
     }
     '''
     
-    @staticmethod
-    def _make_key(data):
-        raw_url = data['_raw']['url']
-        key = _common.pure_url(raw_url)
-        return key
-    
     def _make_part_first_url(self, info_vid):
         tvid = info_vid['tvid']
         vid = info_vid['vid']
@@ -94,7 +88,7 @@ class Entry(MEntry):
         auth_key = f['m_auth_key']
         set_locale_zh_tw = f['m_set_locale_zh_tw']
         
-        # FIXME TODO gen random qyid
+        # FIXME gen random qyid
         qyid = uuid.uuid4().hex
         
         out = _raw_make_first_url(tvid, vid, tm, qyid=qyid, set_vv=set_vv, set_um=set_um, ugc_auth_key=auth_key, set_locale_zh_tw=set_locale_zh_tw)
@@ -103,21 +97,18 @@ class Entry(MEntry):
     def get_dep(self, gvar, data):
         dep = super().get_dep(gvar, data)
         
-        self._key = self._make_key(data)
+        self._key = _common.pure_url(data['_raw']['url'])
         # check get info_vid (first)
-        if (not 'info_vid' in data) or (self._get_key_data(self._key, data['info_vid']) == None):
+        if self._check_dep_key('info_vid', data):
             dep.append({
                 'entry' : 'info_vid', 
                 'key' : self._key, 
-                'raw' : {
-                    'key' : self._key, 
-                    'raw_url' : data['_raw']['url'], 
-                }, 
+                'raw' : data['_raw'], 
             })
             return dep
         # check get key_vf (never cache key_vf)
-        if (not 'key_vf' in data) or (self._get_key_data(self._key, data['key_vf']) == None):
-            info_vid = self._get_key_data(self._key, data['info_vid'])
+        if self._check_dep_key('key_vf', data):
+            info_vid = self._get_key_data(self._key, data['info_vid'])['vid']
             self._part_first_url = self._make_part_first_url(info_vid)
             
             dep.append({

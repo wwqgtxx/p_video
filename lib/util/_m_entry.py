@@ -41,6 +41,8 @@ from ._common import json_cmp
 class MEntry(object):
     def __init__(self):
         self.gvar = None
+        
+        self._key = None
     
     def get_dep(self, gvar, data):
         self.gvar = gvar
@@ -57,6 +59,11 @@ class MEntry(object):
             if json_cmp(i['key'], key):
                 return i['ret']
         return None
+    
+    def _check_dep_key(self, entry_name, data):
+        if (not entry_name in data) or (self._get_key_data(self._key, data[entry_name]) == None):
+            return True
+        return False
     
     # end MEntry class
 

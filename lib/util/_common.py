@@ -3,6 +3,7 @@
 
 import json
 import hashlib
+import datetime
 
 
 def hash_md5(raw):
@@ -31,6 +32,16 @@ def merge_dict_obj(a, b):	# merge b in a
         else:
             out[key] = b[key]
     return out
+
+
+def gen_last_update():
+    return print_time_iso(get_utc_now())
+
+def get_utc_now():
+    return datetime.datetime.today().utcnow()
+
+def print_time_iso(date):
+    return date.isoformat() + 'Z'
 
 
 # end _common.py

@@ -17,14 +17,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-from ...util import MEntry
+from ... import err, util
+from ...util import log, MEntry
 
 from . import var, _common
 
 
 class Entry(MEntry):
     '''
-    module/entry: e_271.m_pc_flash: method: pc_flash
+    module/entry: e_271.m_pc_flash
+        method: pc_flash
     
     
     method entry DEPendencies graph
@@ -41,14 +43,62 @@ class Entry(MEntry):
     '''
     
     def get_dep(self, gvar, data):
-        super().get_dep(gvar, data)
+        dep = super().get_dep(gvar, data)
+        # TODO maybe support just imput vid info
         
-        # TODO
+        # check input raw_url
+        length = len(gvar.raw_url)
+        if length < 1:
+            log.e('no input URL')
+            raise err.ConfigError('gvar.raw_url', gvar.raw_url)
+        elif length > 1:
+            log.w('only use first input URL')
+        raw_url = gvar.raw_url[0]
+        
+        # TODO check input url (support re)
+        
+        self._key = _common.pure_url(raw_url)
+        # check url_file
+        if self._check_dep_key('url_file', data):
+            dep.append({
+                'entry' : 'url_file', 
+                'key' : self._key, 
+                'raw' : {
+                    'url' : raw_url, 
+                }, 
+            })
+            return dep
+        return dep
     
-    def do_p(data):
+    def do_p(self, data):
+        raw = self._get_key_data(self._key, data['url_file'])
+        pvinfo = raw['pvinfo']
+        info_vid = raw['info_vid']
+        vi = raw['vms']['data']['vi']
         
-        # TODO
-        pass
+        # gen pvinfo.info data
+        i = {
+            'url' : info_vid['url'], 
+            'url_pure' : info_vid['url_pure'], 
+            
+            'title' : vi['vn'], 
+            'title_extra' : {
+                'sub' : vi['subt'], 
+                
+                # FIXME `no` maybe BUG here
+                'no' : vi['pd'], 
+                'short' : vi['an'], 
+            }, 
+            
+            'site' : var.SITE, 
+            'site_name' : var.SITE_NAME, 
+            
+            'vid' : info_vid['vid']['tvid'], 	# here choose `tvid` as the main vid
+            'vid_extra' : info_vid['vid'], 
+        }
+        pvinfo['info'] = i
+        # more process on pvinfo
+        return util.make_pvinfo_output(pvinfo)
     # end Entry class
 
 module_entry = Entry	# exports
