@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 
-version_str = 'p_video version 0.8.0.0-1 test201607012241'
+version_str = 'p_video version 0.8.0.0-1 test201607020116'
 
 # end version.py
 

@@ -61,7 +61,10 @@ import time
 
 import subprocess
 import multiprocessing.dummy as multiprocessing
+import urllib.parse
 import urllib.request
+import gzip
+
 
 from .. import err, util
 from ..var import var
@@ -70,9 +73,30 @@ from ..util import log
 # TODO support global proxy config
 
 
-def _req_with_native():
-    # TODO
-    pass
+def _req_with_native(url, timeout_s=None, header={}, method='GET', use_compress=True):
+    # TODO support timeout_s
+    # TODO support other methods
+    # TODO support POST data
+    
+    # NOTE check and add compress header
+    if use_compress:
+        # TODO support more compress method
+        header['Accept-Encoding'] = 'gzip'	# NOTE accept gzip only
+    # TODO better log
+    log.d(' native --> ' + url)
+    
+    req = urllib.request.Request(url, headers=header, method=method)
+    res = urllib.request.urlopen(req)
+    
+    blob = res.read()
+    # check Content-Encoding
+    content_encoding = res.getheader('Content-Encoding')
+    if content_encoding != None:
+        if content_encoding == 'gzip':
+            blob = gzip.decompress(blob)
+        else:	# unknow compress method
+            raise Exception('unknow_content_encoding', content_encoding)
+    return blob
 
 def _req_with_curl(url, timeout_s=None, header={}, method='GET', bin_curl='curl', use_compress=True):
     # TODO support POST data
@@ -115,6 +139,10 @@ def _do_one_req(one, req):
         # TODO support get error info from curl
         blob = _req_with_curl(url, timeout_s=timeout, header=header, method=method, bin_curl=req['bin_curl'], use_compress=use_compress)
         # TODO log
+        out['blob'] = blob
+    elif req_with == 'native':
+        # TODO error process
+        blob = _req_with_native(url, timeout_s=timeout, header=header, method=method, use_compress=use_compress)
         out['blob'] = blob
     else:
         log.e('not support net.http request with ' + req_with)
