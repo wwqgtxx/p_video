@@ -29,7 +29,7 @@ def _gen_dep(dep):
                 if util.json_cmp(i['key'], key):
                     data_in_cache = True
                     break
-            if data_in_cache:
+            if data_in_cache:	# NOTE this may never happen
                 log.i('use cache: entry ' + entry + ', key = ' + str(key))
                 continue	# ignore this dep
         else:

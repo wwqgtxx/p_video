@@ -113,7 +113,7 @@ class MVar(object):
     def _clean_cache(self):
         # clean each item not in gvar.cache, to actually prevent use cache
         f = self.gvar.feature
-        for i in self.gvar.cache:
+        for i in list(self.gvar.cache.keys()):
             if not i in f['_cache_use_list']:
                 self.gvar.cache.pop(i)
     # end MVar class

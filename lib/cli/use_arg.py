@@ -54,13 +54,13 @@ def use(arg_info):
     # set data to var
     if '_debug' in ai:
         var.debug = ai['_debug']
-    if 'module' in ai:
+    if ('module' in ai) and (ai['module'] != None):
         var.module = ai['module']
-    if 'entry' in ai:
+    if ('entry' in ai) and (ai['entry'] != None):
         var.entry = ai['entry']
-    if 'rest' in ai:
+    if 'rest' in ai:	# TODO process CLI override config BUG
         var.rest = ai['rest']
-    if 'raw_url' in ai:
+    if 'raw_url' in ai:	# TODO process CLI override config BUG
         var.raw_url = ai['raw_url']
     # features
     set_features(ai)
