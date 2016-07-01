@@ -52,6 +52,7 @@ class Entry(MEntry):
         # make http req to do list
         req = {
             'req' : [], 
+            'ret_single' : False, 
         }
         for v in pvinfo['video']:
             for f in v['file']:
