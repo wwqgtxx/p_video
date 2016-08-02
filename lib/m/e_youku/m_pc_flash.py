@@ -24,17 +24,15 @@ class Entry(MEntry):
     
     def get_dep(self, gvar, data):
         dep = super().get_dep(gvar, data)
-        # FIXME DEBUG here, now dep on url_before
         
         # TODO check input raw_url
         raw_url = gvar.raw_url[0]
         
         self._key = _common.pure_url(raw_url)
-        # FIXME check url_before
-        ## check url_file
-        if self._check_dep_key('url_before', data):
+        # check url_file
+        if self._check_dep_key('url_file', data):
             dep.append({
-                'entry' : 'url_before', 
+                'entry' : 'url_file', 
                 'key' : self._key, 
                 'raw' : {
                     'url' : raw_url, 
@@ -44,9 +42,7 @@ class Entry(MEntry):
         return dep
     
     def do_p(self, data):
-        # FIXME
-        raw = self._get_key_data(self._key, data['url_before'])
-        
+        raw = self._get_key_data(self._key, data['url_file'])
         pvinfo = raw['pvinfo']
         info_vid = raw['info_vid']
         data = raw['first']['data']
