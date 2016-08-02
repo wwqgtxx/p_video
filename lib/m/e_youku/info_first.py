@@ -32,7 +32,7 @@ class Entry(MEntry):
     '''
     
     def _get_first_url(self, info_vid):
-        vid = info_vid['vid']
+        vid = info_vid['vid']['vid']
         return _make_first_url(vid)
     
     def get_dep(self, gvar, data):

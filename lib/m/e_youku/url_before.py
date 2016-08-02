@@ -34,7 +34,7 @@ class Entry(MEntry):
         
         self._key = _common.pure_url(data['_raw']['url'])
         # check info_first
-        if self._check_dep_kep('info_first', data):
+        if self._check_dep_key('info_first', data):
             dep.append({
                 'entry' : 'info_first', 
                 'key' : self._key, 
