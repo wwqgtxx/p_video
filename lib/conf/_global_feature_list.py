@@ -62,6 +62,7 @@ def get_feature_init():
             
             'core' : {	# core ID list to use
                 'kill_271_cmd5' : 'cmd5', 
+                'doll_youku' : 'doll_youku', 
             }, 
         }, 
         
